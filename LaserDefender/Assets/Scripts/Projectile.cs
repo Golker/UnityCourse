@@ -5,10 +5,13 @@ public class Projectile : MonoBehaviour {
 
 	float damage = 100f;
 	LevelManager levelManager;
+	ScoreKeeper scoreKeeper;
+	public AudioClip enemyDeathSound;
 
 	// Use this for initialization
 	void Start () {		
 		this.levelManager = GameObject.FindObjectOfType<LevelManager>();
+		this.scoreKeeper = GameObject.Find("Score").GetComponent<ScoreKeeper>();
 	}
 	
 	// Update is called once per frame
@@ -23,6 +26,8 @@ public class Projectile : MonoBehaviour {
 		} else if (collider.transform.tag == "Enemy" && this.transform.tag == "PlayerProjectile") {
 			Enemy enemy = collider.gameObject.GetComponent<Enemy>();
 			if (enemy.Health <= this.damage) {				
+				this.scoreKeeper.ChangeScore(enemy.ValuePoints);
+				AudioSource.PlayClipAtPoint(enemyDeathSound, collider.gameObject.transform.position);
 				Destroy(collider.gameObject);
 			} else {
 				enemy.Health -= this.damage;

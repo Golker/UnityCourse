@@ -21,7 +21,7 @@ public class LevelManager : MonoBehaviour {
 		LoadLevel("Lose");
 	}
 
-	public void AllEnemiesKilled() {
+	public void AllEnemiesKilled() {		
 		LoadNextLevel();
 	}
 }
